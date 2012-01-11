@@ -1,28 +1,59 @@
+/*Stack using array*/
+
 #include<stdio.h>
 #include<stdlib.h>
+#define MAX 10
 
-struct node{
-int data;
-struct data node link;
-};
-
-struct node* push(struct node *p, int value)
+void push(int stack[], int *top, int value)
 {
-	struct node *temp;
-	temp = (struct node*)malloc(sizeof(struct node));
-	if(temp==NULL)
+	if(*top<MAX)
 	{
-		printf("Memory couldnt be allocated\n");
-		exit(0);
+		*top=*top+1;
+		stack[*top]=value;
 	}
 	
-	temp->data=value;
-	temp->link=p;
-	p=temp;
-	return(p);
+	else{
+		printf("Stack is full\n");
+		exit(0);
+		}
 }
 
-struct node *pop(struct node *p)
+void pop(int stack[], int *top, int *value)
 {
-	int tempInt;
-	
+	if(*top>=0)
+	{
+		*value=stack[*top];
+		*top=*top-1;
+	}
+	else{
+		printf("Stack is empty\n");
+		exit(0);
+		}
+}
+
+void main()
+{
+	int stack[MAX];
+	int top=-1;
+	int n, value;
+	do{
+		do{
+			printf("Enter the value to be pushed:\n");
+			scanf("%d", &value);
+			push(stack, &top, value);
+			printf("Enter 1 to continue:\n");
+			scanf("%d", &n);
+			}while(n==1);
+		printf("Enter 1 to pop an element:\n");
+		scanf("%d", &n);
+		while(n==1)
+		{
+			pop(stack, &top, &value);
+			printf("The popped value is %d\n",value);
+			printf("Enter 1 to pop an element:\n");
+			scanf("%d", &n);
+		}
+		printf("Enter 1 to continue:\n");
+		scanf("%d", &n);
+	}while(n==1);
+} 
